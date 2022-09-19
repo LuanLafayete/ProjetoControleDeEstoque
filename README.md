@@ -1,6 +1,6 @@
 # Projeto Controle de estoque 
 
-![preview](./.github/preview.png)
+![preview](./.github/preview1.png)
 ![preview](./.github/preview2.png)
 
 
