@@ -28,3 +28,13 @@ textarea {
     background-color: #777;
     border-color: #fff
 }
+
+.container {
+    width: 400px;
+    margin: 0 auto;
+}
+
+.titulo {
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
