@@ -11,9 +11,9 @@ namespace ControleEstoque.Web.Controllers
     {
         private static List<GrupoProdutoModel> _listaGrupoProduto = new List<GrupoProdutoModel>()
         {
-            new GrupoProdutoModel() { Id = 1, Nome = "Livro", Ativo=true },
-            new GrupoProdutoModel() { Id = 2, Nome = "Mouse", Ativo=true },
-            new GrupoProdutoModel() { Id = 3, Nome = "Monitores", Ativo=false }
+            new GrupoProdutoModel() { Id=1, Nome="Livros", Ativo=true },
+            new GrupoProdutoModel() { Id=2, Nome="Mouses", Ativo=true },
+            new GrupoProdutoModel() { Id=3, Nome="Monitores", Ativo=false }
         };
 
         [Authorize]
@@ -27,6 +27,43 @@ namespace ControleEstoque.Web.Controllers
         public ActionResult RecuperarGrupoProduto(int id)
         {
             return Json(_listaGrupoProduto.Find(x => x.Id == id));
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult ExcluirGrupoProduto(int id)
+        {
+            var ret = false;
+
+            var registroBD = _listaGrupoProduto.Find(x => x.Id == id);
+            if (registroBD != null)
+            {
+                _listaGrupoProduto.Remove(registroBD);
+                ret = true;
+            }
+
+            return Json(ret);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult SalvarGrupoProduto(GrupoProdutoModel model)
+        {
+            var registroBD = _listaGrupoProduto.Find(x => x.Id == model.Id);
+
+            if (registroBD == null)
+            {
+                registroBD = model;
+                registroBD.Id = _listaGrupoProduto.Max(x => x.Id) + 1;
+                _listaGrupoProduto.Add(registroBD);
+            }
+            else
+            {
+                registroBD.Nome = model.Nome;
+                registroBD.Ativo = model.Ativo;
+            }
+
+            return Json(registroBD);
         }
 
         [Authorize]
@@ -89,6 +126,4 @@ namespace ControleEstoque.Web.Controllers
             return View();
         }
     }
-
-
 }
